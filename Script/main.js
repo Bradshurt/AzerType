@@ -13,6 +13,6 @@
 // let checkBox = document.querySelectorAll(".optionSource input");
 // console.log(checkBox);
 
-ChoixOption()
+// ChoixOption()
 
 lancerJeu();
