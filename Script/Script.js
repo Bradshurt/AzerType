@@ -24,18 +24,54 @@ function affficherMail(nom, mail, score) {
 
 // Fonction de vérificaiton du nom et de l'email
 function nomValide(nom) {
-    if (nom.length >= 2) {
-        return true;
+    if (nom.length < 2) {
+        throw new Error("Le nom doit contenir au moins 2 caractères.");
     }
-    return false;
 }
 function emailValide(email) {
     let regexEmail = new RegExp("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
-    if (regexEmail.test(email)) {
-        return true;
+    if (!regexEmail.test(email)) {
+        throw new Error("L'email n'est pas valide.");
     }
-    return false;
 
+}
+// Message d'erreur pour les champs du formulaire
+function afficherMessageError(message) {
+
+    let popup = document.querySelector('.popup');
+    let  messageError = document.getElementById("messageError");
+
+    if (!messageError) {
+        messageError = document.createElement('span');
+        messageError.id = "messageError";
+
+        popup.append(messageError);
+
+    }
+
+    messageError.innerText = message
+}
+// gestion du formulaire
+function gererFormulaire(scoreemail) {
+    try {
+        let inputName = document.getElementById('nom');
+        let nom = inputName.value;
+        nomValide(nom);
+
+        let inputEmail = document.getElementById('email');
+        let email = inputEmail.value;
+        emailValide(email);
+
+        let formData = document.querySelectorAll('.popup input');
+        formData.forEach((input) => {
+            console.log(input.value);
+            input.value = "";
+        });
+        afficherMessageError("");
+        affficherMail(nom, email, scoreemail);
+    } catch (error) {
+        afficherMessageError(error.message);
+    }
 }
 
 // function principale du jeu
@@ -94,27 +130,8 @@ function lancerJeu() {
 
     formlaire.addEventListener('submit', (e) => {
         e.preventDefault();
-
-        let inputName = document.getElementById('nom');
-        let nom = inputName.value;
-
-        let inputEmail = document.getElementById('email');
-        let email = inputEmail.value;
-
-        if (nomValide(nom) && emailValide(email)) {
-            let formData = document.querySelectorAll('.popup input');
-            formData.forEach((input) => {
-                console.log(input.value);
-                input.value = "";
-            })
-
-            let scoreemail = `${score} / ${i}`;
-
-            affficherMail(inputName.value, inputEmail.value, scoreemail);
-        } else {
-            console.log("Le nom ou l'email n'est pas valide");
-        }
-        
+        let scoreemail = `${score} / ${i}`;
+        gererFormulaire(scoreemail);
     })
 
 
