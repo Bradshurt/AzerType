@@ -16,3 +16,4 @@
 // ChoixOption()
 
 lancerJeu();
+gestionEventPopup();

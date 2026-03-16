@@ -11,6 +11,11 @@ function ChoixOption () {
     let optionSource = document.querySelectorAll("input[name='optionSource']");
 }
 
+function affficherMail(nom, mail, score) {
+    let mailContent = `mailto:${mail}?subject=Résultat du jeu AzerType&body=salut, je suis ${nom}et je viens de réaliser un score de ${score} sur le site azertype !`;
+    location.href = mailContent;
+}
+
 function lancerJeu() {
     // Initialisations
     let score = 0
@@ -61,6 +66,28 @@ function lancerJeu() {
             AfficherMot(listProposition[i]);
         });
     });
+
+    let formlaire = document.querySelector('form');
+
+    formlaire.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        let inputName = document.getElementById('nom');
+
+        let inputEmail = document.getElementById('email');
+
+        let formData = document.querySelectorAll('.popup input');
+        formData.forEach((input) => {
+                console.log(input.value);
+                input.value = "";
+            })
+
+        let scoreemail = `${score} / ${i}`;
+
+        affficherMail(inputName.value, inputEmail.value, scoreemail);
+        
+    })
+
 
 }
 
