@@ -6,16 +6,39 @@ function AfficherResultat (score, nbDemotsProposes) {
 }
 
 // fonction pour choisir l'option mot ou phrase
-
 function ChoixOption () {
     let optionSource = document.querySelectorAll("input[name='optionSource']");
 }
 
+// fonction pour afficher le mot ou la phrase à taper
+function AfficherMot (Mot) {
+    let proPosition = document.querySelector('.zoneProposition');
+    proPosition.innerHTML = Mot;
+}
+
+// fonction pour envoyer un mail avec le résultat du jeu
 function affficherMail(nom, mail, score) {
     let mailContent = `mailto:${mail}?subject=Résultat du jeu AzerType&body=salut, je suis ${nom}et je viens de réaliser un score de ${score} sur le site azertype !`;
     location.href = mailContent;
 }
 
+// Fonction de vérificaiton du nom et de l'email
+function nomValide(nom) {
+    if (nom.length >= 2) {
+        return true;
+    }
+    return false;
+}
+function emailValide(email) {
+    let regexEmail = new RegExp("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    if (regexEmail.test(email)) {
+        return true;
+    }
+    return false;
+
+}
+
+// function principale du jeu
 function lancerJeu() {
     // Initialisations
     let score = 0
@@ -73,25 +96,26 @@ function lancerJeu() {
         e.preventDefault();
 
         let inputName = document.getElementById('nom');
+        let nom = inputName.value;
 
         let inputEmail = document.getElementById('email');
+        let email = inputEmail.value;
 
-        let formData = document.querySelectorAll('.popup input');
-        formData.forEach((input) => {
+        if (nomValide(nom) && emailValide(email)) {
+            let formData = document.querySelectorAll('.popup input');
+            formData.forEach((input) => {
                 console.log(input.value);
                 input.value = "";
             })
 
-        let scoreemail = `${score} / ${i}`;
+            let scoreemail = `${score} / ${i}`;
 
-        affficherMail(inputName.value, inputEmail.value, scoreemail);
+            affficherMail(inputName.value, inputEmail.value, scoreemail);
+        } else {
+            console.log("Le nom ou l'email n'est pas valide");
+        }
         
     })
 
 
-}
-
-function AfficherMot (Mot) {
-    let proPosition = document.querySelector('.zoneProposition');
-    proPosition.innerHTML = Mot;
 }

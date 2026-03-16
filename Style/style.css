@@ -242,6 +242,10 @@ footer {
     margin-bottom: 10px;
 }
 
+.error {
+    border: solid 3px rgb(99, 28, 28) !important;
+}
+
 .popup button {
     margin: 5px;
 }
