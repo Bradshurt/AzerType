@@ -97,7 +97,7 @@ function lancerJeu() {
         AfficherMot(listProposition[i]);
 
         if (listProposition[i] === undefined){
-            const alertFin = document.querySelector('zoneProposition');
+            const alertFin = document.querySelector('.zoneProposition');
             AfficherMot("Fin du jeu !");
             buttonValider.disabled = true;
         }else {
